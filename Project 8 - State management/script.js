@@ -18,14 +18,18 @@ window.addEventListener('load', function(){
     player.draw(ctx);
 
     const input = new InputHandler;
-
-    function animate(deltaTime){
+    
+    let lastTime = 1;
+    function animate(timeStamp){
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
         ctx.clearRect(0,0, canvas.width,canvas.height);
-        player.draw(ctx)
-        drawStatusText(ctx, input);
+        player.update(input.lastKey);
+        player.draw(ctx, deltaTime);
+        drawStatusText(ctx, input, player);
         requestAnimationFrame(animate);
     }
-    animate(0)
+    animate(20)
 })
 
 // quedamos en el minuto 2:24:00 del tutorial
